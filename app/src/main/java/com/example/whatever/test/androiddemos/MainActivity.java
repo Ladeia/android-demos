@@ -45,18 +45,9 @@ public class MainActivity extends AppCompatActivity {
 
             try {
                 URL url = new URL("http://www.lohanband.com/timestamplogger");
+                reader = new BufferedReader(new InputStreamReader(url.openStream()));
 
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.connect();
-
-                InputStream inputStream = urlConnection.getInputStream();
                 StringBuilder buffer = new StringBuilder();
-
-                if (inputStream == null) {
-                    return null;
-                }
-
-                reader = new BufferedReader(new InputStreamReader(inputStream));
 
                 String line;
                 while ((line = reader.readLine()) != null) {
@@ -64,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 reader.close();
-                urlConnection.disconnect();
 
                 return buffer.toString();
             } catch (IOException e) {
